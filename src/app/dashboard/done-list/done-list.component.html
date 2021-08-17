@@ -1,1 +1,3 @@
-<p>done-list works!</p>
+<h2>Done ({{(completed$ | async)?.length}})</h2>
+
+<app-to-do-list [todoList$]="completed$" (itemClicked)="removeCompletedItem($event)"></app-to-do-list>

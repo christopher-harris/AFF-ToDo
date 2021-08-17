@@ -15,7 +15,10 @@ export class ToDosEffects {
     loadAllToDos$ = createEffect(() => { return this.actions$.pipe(
         ofType(actions.GET_ALL_TO_DOS),
         exhaustMap(action => this.toDosService.getAllTodos().pipe(
-            map((toDos: ToDo[]) => actions.GET_ALL_TO_DOS_SUCCESS({toDos})),
+            map((toDos: ToDo[]) => {
+                console.log(toDos);
+                return actions.GET_ALL_TO_DOS_SUCCESS({toDos});
+            }),
             catchError(error => of(actions.GET_ALL_TO_DOS_FAILURE({error})))
         ))
     ) });

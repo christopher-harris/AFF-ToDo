@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {ToDoService} from '../shared/to-do.service';
 import {Observable} from 'rxjs';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {ToDo} from '../shared/models/to-do.model';
-import {selectAll} from '../store/todos/selectors/to-do.selectors';
+import {
+  getAllToDos,
+  selectAll,
+  selectCompletedToDos,
+  selectUncompletedToDos
+} from '../store/todos/selectors/to-do.selectors';
+import {GET_ALL_TO_DOS} from '../store/todos';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,14 +16,14 @@ import {selectAll} from '../store/todos/selectors/to-do.selectors';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  allToDos$: Observable<ToDo[]> = this.store.pipe(selectAll);
-  // allTodos$: Observable<any> = this.toDoService.getAllTodos();
-  // allTodos$: Observable<any> = this.toDoService.entities$;
+  allToDos$: Observable<ToDo[]> = this.store.pipe(select(getAllToDos));
+  unfinished$: Observable<ToDo[]> = this.store.pipe(select(selectUncompletedToDos));
+  completed$: Observable<ToDo[]> = this.store.pipe(select(selectCompletedToDos));
 
   constructor(private store: Store<any>) { }
 
   ngOnInit(): void {
-    // this.allTodos$.subscribe(x => console.log(x));
+    this.store.dispatch(GET_ALL_TO_DOS());
   }
 
 }

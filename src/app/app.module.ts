@@ -18,6 +18,7 @@ import { EntityDataModule } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 import { EffectsModule } from '@ngrx/effects';
 import * as todosStore from './store/todos';
+import { IncompleteComponent } from './dashboard/incomplete/incomplete.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import * as todosStore from './store/todos';
         ToolbarComponent,
         DashboardComponent,
         ToDoListComponent,
-        DoneListComponent
+        DoneListComponent,
+        IncompleteComponent
     ],
     imports: [
         BrowserModule,

@@ -1,1 +1,10 @@
-<p>to-do-list works!</p>
+<ng-container *ngFor="let todo of (todoList$ | async)">
+    <mat-card class="mb-4" (click)="handleItemClicked(todo)">
+        <div class="d-flex justify-content-start align-items-center">
+            <button mat-icon-button aria-label="Example icon button with a vertical three dot icon" color="{{todo.completed ? 'primary' : null}}">
+                <mat-icon>{{todo.completed ? 'check_circle_outline' : 'radio_button_unchecked'}}</mat-icon>
+            </button>
+            <span class="ml-3">{{todo.title}}</span>
+        </div>
+    </mat-card>
+</ng-container>

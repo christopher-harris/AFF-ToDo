@@ -1,0 +1,3 @@
+<h2>To Do List ({{(unfinished$ | async)?.length}})</h2>
+
+<app-to-do-list [todoList$]="unfinished$" (itemClicked)="completeTodo($event)"></app-to-do-list>

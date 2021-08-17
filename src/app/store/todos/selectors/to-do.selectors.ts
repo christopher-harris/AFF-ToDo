@@ -12,3 +12,13 @@ export const {selectAll, selectEntities, selectIds, selectTotal} = toDosAdapter.
 );
 
 export const getAllToDos = selectAll;
+
+export const selectUncompletedToDos = createSelector(
+    getAllToDos,
+    (todos) => todos.filter(todo => todo.completed === false)
+);
+
+export const selectCompletedToDos = createSelector(
+    getAllToDos,
+    (todos) => todos.filter(todo => todo.completed === true)
+);
