@@ -1,0 +1,14 @@
+@use "~@angular/material" as mat;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+$my-custom-level: mat.define-typography-level(
+        $font-family: Inter,
+        $font-weight: 400,
+        $font-size: 1rem,
+        $line-height: 1,
+        $letter-spacing: normal,
+);
+
+$aff-typo-config: mat.define-typography-config(
+        $body-1: $my-custom-level
+);

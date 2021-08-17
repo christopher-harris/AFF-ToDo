@@ -1,0 +1,47 @@
+@use "~@angular/material" as mat;
+@use "../base/typography" as typo;
+@use "../base/palettes";
+@use "sass:map";
+@use "../components";
+@import "../functions/functions";
+
+@include mat.core(typo.$aff-typo-config);
+
+$my-primary: mat.define-palette(palettes.$aff-purple, 500);
+$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+$my-theme: mat.define-light-theme((
+        color: (
+                primary: $my-primary,
+                accent: $my-accent,
+        ),
+));
+
+@function fix-theme($theme) {
+        $background: map-get($theme, background);
+        $new-background: (
+                status-bar: #845EC2,
+                app-bar: palettes.$aff-black,
+                background: mat.get-color-from-palette(palettes.$aff-neutralGray, 500),
+                hover: rgba(0, 0, 0, 0.04),
+                card: white,
+                dialog: white,
+                disabled-button: rgba(0, 0, 0, 0.12),
+                raised-button: white,
+                focused-button: rgba(0, 0, 0, 0.12),
+                selected-button: #845EC2,
+                selected-disabled-button: #845EC2,
+                disabled-button-toggle: #845EC2,
+                unselected-chip: #845EC2,
+                disabled-list-option: #845EC2,
+                tooltip: #845EC2
+        );
+
+        $new-theme: map-deep-set($theme, "background" "app-bar", red);
+        $new-theme: map-deep-set($theme, "color" "background", $new-background);
+        @return $new-theme;
+};
+
+$test-fix: fix-theme($my-theme);
+
+@include mat.all-component-themes($test-fix);
