@@ -1,26 +1,55 @@
-import {Action, createAction, props} from '@ngrx/store';
+import {Action} from '@ngrx/store';
 import {ToDo} from '../../../shared/models/to-do.model';
 
-export const GET_ALL_TO_DOS = createAction(
-    '[To Dos] Get All To Dos',
-);
+export enum ToDoActionTypes {
+    FETCH_ALL_TO_DOS = '[To Dos] Get All',
+    FETCH_ALL_TO_DOS_SUCCESS = '[To Dos] Get All Success',
+    FETCH_ALL_TO_DOS_FAILURE = '[To Dos] Get All Failure',
+    UPDATE_ITEM = '[To Dos] Update Item',
+    UPDATE_ITEM_SUCCESS = '[To Dos] Update Item Success',
+    UPDATE_ITEM_FAILURE = '[To Dos] Update Item Failure',
+}
 
-export const GET_ALL_TO_DOS_SUCCESS = createAction(
-    '[To Dos Success] Get All To Dos Success',
-    props<{toDos: ToDo[]}>()
-);
+export class FetchAllToDos implements Action {
+    readonly type = ToDoActionTypes.FETCH_ALL_TO_DOS;
+}
 
-export const GET_ALL_TO_DOS_FAILURE = createAction(
-    '[To Dos Failure] Get All To Dos Failure',
-    props<{error: any}>()
-);
+export class FetchAllToDosSuccess implements Action {
+    readonly type = ToDoActionTypes.FETCH_ALL_TO_DOS_SUCCESS;
+    constructor(public payload: ToDo[]) {}
+}
 
-// export enum ToDoActionTypes {
-//     GET_ALL_TO_DOS = '[To Dos] Get All To Dos',
-// }
-//
-// export class GetAllToDos implements Action {
-//     readonly type = ToDoActionTypes.GET_ALL_TO_DOS;
-// }
+export class FetchAllToDosFailure implements Action {
+    readonly type = ToDoActionTypes.FETCH_ALL_TO_DOS_FAILURE;
+    constructor(public payload: any) {
+    }
+}
 
-// export type ToDosActions = GetAllToDos;
+export class UpdateItem implements Action {
+    readonly type = ToDoActionTypes.UPDATE_ITEM;
+
+    constructor(public payload: ToDo) {}
+
+}
+
+export class UpdateItemSuccess implements Action {
+    readonly type = ToDoActionTypes.UPDATE_ITEM_SUCCESS;
+
+    constructor(public payload: any) {}
+
+}
+
+export class UpdateItemFailure implements Action {
+    readonly type = ToDoActionTypes.UPDATE_ITEM_FAILURE;
+
+    constructor(public payload: any) {}
+
+}
+
+export type ToDoActions =
+    | FetchAllToDos
+    | FetchAllToDosSuccess
+    | FetchAllToDosFailure
+    | UpdateItem
+    | UpdateItemSuccess
+    | UpdateItemFailure;

@@ -18,20 +18,20 @@ export class ToDoService {
     return this.http.get<ToDo[]>('/api');
   }
 
-  getSingleToDo() {
-
+  getSingleToDo(id: string): Observable<ToDo> {
+    return this.http.get<ToDo>(`/api/${id}`);
   }
 
-  createToDo() {
-
+  createToDo(newItem: any) {
+    return this.http.post('/api/', newItem);
   }
 
-  updateToDo(id: any) {
-
+  updateToDo(updatedItem: any): Observable<any> {
+    return this.http.put<ToDo>('/api/', updatedItem);
   }
 
   deleteToDo(id: any) {
-
+    return this.http.delete(`/api/${id}`);
   }
 
 }

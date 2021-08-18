@@ -1,4 +1,3 @@
-import { TodoService } from './services/todo.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -9,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'interview-app';
 
-  constructor(private _todoService: TodoService) {
+  constructor() {
 
   }
 

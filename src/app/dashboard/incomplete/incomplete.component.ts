@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
 import {ToDo} from '../../shared/models/to-do.model';
-import {select, Store} from '@ngrx/store';
-import {selectUncompletedToDos} from '../../store/todos/selectors/to-do.selectors';
+import {ToDosStateService} from '../../shared/services/to-dos-state.service';
+import {ToDoService} from '../../shared/to-do.service';
 
 @Component({
   selector: 'app-incomplete',
@@ -10,9 +10,10 @@ import {selectUncompletedToDos} from '../../store/todos/selectors/to-do.selector
   styleUrls: ['./incomplete.component.scss']
 })
 export class IncompleteComponent implements OnInit {
-  unfinished$: Observable<ToDo[]> = this.store.pipe(select(selectUncompletedToDos));
+  unfinished$: Observable<ToDo[]> = this.store.incompleteItems$;
 
-  constructor(private store: Store<any>) { }
+  constructor(private store: ToDosStateService,
+              private toDoService: ToDoService) { }
 
   ngOnInit(): void {
   }
