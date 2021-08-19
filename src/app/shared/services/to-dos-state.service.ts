@@ -3,7 +3,8 @@ import {StateService} from './state.service';
 import {ToDo} from '../models/to-do.model';
 import {Observable, throwError} from 'rxjs';
 import {ToDoService} from '../to-do.service';
-import {catchError, tap} from 'rxjs/operators';
+import {catchError, filter, map, switchMap, tap} from 'rxjs/operators';
+import {UsersService} from './users.service';
 
 interface ToDosState {
   allItems: ToDo[];
@@ -12,6 +13,7 @@ interface ToDosState {
   loading: boolean;
   loaded: boolean;
   error: any | null;
+  users: any[];
 }
 
 const initialState: ToDosState = {
@@ -21,6 +23,7 @@ const initialState: ToDosState = {
   loading: false,
   loaded: false,
   error: null,
+  users: [],
 }
 
 @Injectable({
@@ -33,10 +36,40 @@ export class ToDosStateService extends StateService<ToDosState>{
   loading$: Observable<boolean> = this.select(state => state.loading);
   loaded$: Observable<boolean> = this.select(state => state.loaded);
   errors$: Observable<any | null> = this.select(state => state.error);
+  userIds$: Observable<number[]> = this.determineUserIds();
+  users$: Observable<any[]> = this.select(state => state.users);
 
-  constructor(private toDoService: ToDoService) {
+  constructor(private toDoService: ToDoService,
+              private usersService: UsersService) {
     super(initialState);
     this.loadItems();
+    this.loadUsers();
+    // this.userIds$ = this.determineUserIds();
+  }
+
+  determineUserIds() {
+    return this.allItems$.pipe(
+        filter(todos => todos.length > 0),
+        map((allTodos: ToDo[]) => {
+          const uniqueIds = [
+              ...new Set(allTodos.map(item => item.userId))
+          ];
+          return uniqueIds;
+        })
+    );
+  }
+
+  loadUsers() {
+    this.userIds$.pipe(
+        filter(userIds => userIds.length > 0),
+    ).subscribe(userIds => {
+      this.usersService.getSomeUsers(userIds).subscribe((users) => {
+        this.setState({
+          ...this.state,
+          users: users
+        })
+      });
+    });
   }
 
   loadItems() {

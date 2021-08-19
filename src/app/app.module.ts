@@ -19,6 +19,8 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import * as todosStore from './store/todos';
 import { IncompleteComponent } from './dashboard/incomplete/incomplete.component';
+import { NewToDoComponent } from './shared/components/new-to-do/new-to-do.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -27,7 +29,8 @@ import { IncompleteComponent } from './dashboard/incomplete/incomplete.component
         DashboardComponent,
         ToDoListComponent,
         DoneListComponent,
-        IncompleteComponent
+        IncompleteComponent,
+        NewToDoComponent
     ],
     imports: [
         BrowserModule,
@@ -38,12 +41,16 @@ import { IncompleteComponent } from './dashboard/incomplete/incomplete.component
         SharedModule,
         StoreModule.forRoot({}, {}),
         StoreModule.forFeature('to-dos', todosStore.reducers),
-        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+        StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
         EffectsModule.forRoot([]),
-        EffectsModule.forFeature(todosStore.effects)
+        EffectsModule.forFeature(todosStore.effects),
+        ReactiveFormsModule
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [
+        NewToDoComponent
+    ]
 })
 export class AppModule {
 }

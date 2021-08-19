@@ -1,0 +1,43 @@
+<form [formGroup]="newItemForm">
+    <h4>Create To Do</h4>
+    <mat-dialog-content class="pb-3">
+
+        <div class="row">
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <mat-label>Title</mat-label>
+                    <input matInput [formControlName]="'title'" />
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <mat-label>Assigned To</mat-label>
+                    <mat-select [formControlName]="'userId'">
+                        <mat-option *ngFor="let user of (users$ | async)" [value]="user.userId">
+                            <div class="row">
+                                <div class="col-1">
+                                    <img matCardAvatar [src]="user.picture.thumbnail" />
+                                </div>
+                                <div class="col">{{user.name.first}} {{user.name.last}}</div>
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <mat-checkbox [formControlName]="'completed'" [color]="'primary'">Completed</mat-checkbox>
+            </div>
+        </div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button [mat-dialog-close]="true">Create</button>
+    </mat-dialog-actions>
+</form>

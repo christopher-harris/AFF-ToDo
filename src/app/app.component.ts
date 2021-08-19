@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {NewToDoComponent} from './shared/components/new-to-do/new-to-do.component';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +10,21 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'interview-app';
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
 
   }
 
   ngOnInit(): void {
 
+  }
+
+  openCreateToDoDialog() {
+    const dialogRef = this.dialog.open(NewToDoComponent, {
+      width: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 }
